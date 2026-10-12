@@ -79,3 +79,8 @@ to 5 V (or 12 V) by the receiving device.
 - Connect the ESP32 GND to the GND of the receiving device.
 
 To test without a panel, wire the two P250 GPIOs to the two GPIOs of a *RFID - Wiegand* (P008) task.
+
+## License
+
+Like ESPEasy, this plugin is released under the [GNU General Public License v3.0](LICENSE)
+(or, at your option, any later version).
