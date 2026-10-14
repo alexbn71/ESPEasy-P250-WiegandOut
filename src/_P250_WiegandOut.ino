@@ -20,6 +20,7 @@
    and the rules (event <taskname>#Code) once all queued frames are sent.
 
    History:
+   2026-10-14 Don't resend the last code at every task interval
    2026-10-12 First version
  */
 
@@ -155,7 +156,9 @@ boolean Plugin_250(uint8_t function, struct EventStruct *event, String& string)
 
     case PLUGIN_READ:
     {
-      success = true; // Value is updated when a frame is sent
+      // Nothing to read: the value is updated and sent when a frame is sent (sendNext).
+      // Returning true here would resend the last code to controllers and rules at every task interval.
+      success = false;
       break;
     }
 
