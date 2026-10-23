@@ -4,7 +4,7 @@
 reader / keypad**: it sends codes on two GPIOs (D0, D1) to a device with a Wiegand input, such as
 the reader input of an alarm panel or an access controller.
 
-- Any frame length from 4 to 64 bits, with or without the standard parity bits (26 bit, 34 bit, ...)
+- 26, 32, 34 or 40 bit frames, with or without the standard parity bits; any other length (4..64) with `WiegandOutRaw`
 - Facility code + card number, or a raw value
 - Keypad emulation, 4 or 8 bits per key
 - Open drain, push-pull or inverted output (to drive a transistor)
@@ -44,7 +44,7 @@ artifact.
 |---|---|---|
 | GPIO D0 / D1 | – | two output GPIOs |
 | Output mode | Open drain | see *Wiring* |
-| Frame length | 26 bit | 4..64 |
+| Frame length | 26 bit | 26, 32, 34 or 40 bit (a length saved by an older version stays selectable) |
 | Add parity bits | on | leading even parity over the first half, trailing odd parity over the second half |
 | Key format | 4 bit per key | or 8 bit per key, high nibble = inverted key |
 | Pause between keys | 50 ms | also used between queued frames |

@@ -99,11 +99,24 @@ boolean Plugin_250(uint8_t function, struct EventStruct *event, String& string)
       }
 
       addFormSubHeader(F("Frame (WiegandOut)"));
-      addFormNumericBox(F("Frame length"), F("bits"), P250_FRAME_BITS, 4, 64);
-      addUnit(F("bit"));
+      {
+        // The usual formats. A length saved by an older version (any 4..64) stays selectable.
+        const int bits = P250_FRAME_BITS;
+        String    options[] = {
+          F("26 bit - standard (8 bit facility + 16 bit card)"),
+          F("32 bit"),
+          F("34 bit (32 bit card number)"),
+          F("40 bit"),
+          String(bits) + F(" bit (custom)"),
+        };
+        const int optionValues[] = { 26, 32, 34, 40, bits };
+        const bool custom        = bits != 26 && bits != 32 && bits != 34 && bits != 40;
+        const FormSelectorOptions selector(custom ? 5 : 4, options, optionValues);
+        selector.addFormSelector(F("Frame length"), F("bits"), bits);
+      }
       addFormCheckBox(F("Add parity bits"), F("parity"), P250_PARITY != 0);
-      addFormNote(F("Standard 26 bit: even parity + 8 bit facility + 16 bit card + odd parity. "
-                    "34 bit: even parity + 32 bit + odd parity."));
+      addFormNote(F("26 and 34 bit: even parity + data + odd parity (keep parity on). 32 and 40 bit are usually "
+                    "sent without parity. Other formats: WiegandOutRaw."));
 
       addFormSubHeader(F("Keypad (WiegandOutKeys)"));
       {
